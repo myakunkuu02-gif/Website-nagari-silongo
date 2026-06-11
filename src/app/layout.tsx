@@ -1,72 +1,60 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import "./globals.css";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import Preloader from "@/components/layout/Preloader";
+import { siteUrl } from "@/lib/supabase/config";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Cormorant_Garamond({
   subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const body = Manrope({
   subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Nagari Silongo - Website Resmi Pemerintahan Nagari",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Nagari Silongo | Portal Resmi Pemerintahan Nagari",
+    template: "%s | Nagari Silongo",
+  },
   description:
-    "Website resmi Pemerintahan Nagari Silongo, Kecamatan Lubuk Tarok, Kabupaten Sijunjung, Sumatera Barat. Portal informasi, layanan publik, wisata budaya, dan berita terkini.",
+    "Website resmi Nagari Silongo, Kecamatan Lubuk Tarok, Kabupaten Sijunjung, Sumatera Barat. Portal premium untuk profil nagari, berita, wisata, galeri, pemerintahan, dan layanan informasi publik.",
   keywords: [
     "Nagari Silongo",
+    "Lubuk Tarok",
     "Sijunjung",
     "Sumatera Barat",
-    "Minangkabau",
     "Pemerintahan Nagari",
-    "Wisata Alam",
-    "Budaya Minang",
+    "Minangkabau",
+    "Wisata Silongo",
   ],
-  authors: [{ name: "Pemerintahan Nagari Silongo" }],
-  icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
-  },
   openGraph: {
-    title: "Nagari Silongo - Website Resmi Pemerintahan Nagari",
+    title: "Nagari Silongo | Portal Resmi Pemerintahan Nagari",
     description:
-      "Portal informasi resmi Nagari Silongo, Kecamatan Lubuk Tarok, Kabupaten Sijunjung, Sumatera Barat.",
-    siteName: "Nagari Silongo",
+      "Portal pemerintahan digital modern Nagari Silongo dengan nuansa Minangkabau premium, berita dinamis, galeri, wisata, dan dashboard admin Supabase.",
     type: "website",
+    locale: "id_ID",
+    siteName: "Nagari Silongo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nagari Silongo - Website Resmi Pemerintahan Nagari",
+    title: "Nagari Silongo | Portal Resmi Pemerintahan Nagari",
     description:
-      "Portal informasi resmi Nagari Silongo, Kecamatan Lubuk Tarok, Kabupaten Sijunjung, Sumatera Barat.",
+      "Portal resmi Nagari Silongo dengan desain premium, informasi publik, budaya, wisata, dan CMS admin modern.",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <Preloader />
-          {children}
-          <Toaster />
-        </ThemeProvider>
+      <body className={`${display.variable} ${body.variable} bg-background text-foreground antialiased`}>
+        {children}
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );
