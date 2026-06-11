@@ -24,7 +24,13 @@ import BukuTamuSection from '@/components/sections/BukuTamuSection';
 import PengaduanSection from '@/components/sections/PengaduanSection';
 
 export default async function Home() {
-  const heroData = await db.hero.findFirst();
+  let heroData = null;
+
+  try {
+    heroData = await db.hero.findFirst();
+  } catch (error) {
+    console.error('Failed to load hero data on homepage:', error);
+  }
 
   return (
     <main className="min-h-screen">
