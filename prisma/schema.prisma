@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Hero {
+  id          String   @id @default(cuid())
+  badge       String   @default("Website Resmi Pemerintahan Nagari")
+  title       String   @default("NAGARI SILONGO")
+  subtitle    String   @default("Kecamatan Lubuk Tarok \u2022 Kabupaten Sijunjung \u2022 Sumatera Barat")
+  slogan      String   @default("Di Mana Bumi Dipijak, Di Situ Langit Dijunjung")
+  image_url   String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Profil {
+  id          String   @id @default(cuid())
+  title       String   @default("Tentang Nagari Silongo")
+  description String   @default("")
+  image_url   String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model VisiMisi {
+  id          String   @id @default(cuid())
+  visi        String   @default("Mewujudkan Nagari Silongo yang maju, mandiri, religius, berbudaya, dan berbasis digital.")
+  misi        String   @default("[]")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Statistik {
+  id          String   @id @default(cuid())
+  label       String
+  value       String
+  icon        String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Pemerintahan {
+  id          String   @id @default(cuid())
+  nama        String
+  jabatan     String
+  deskripsi   String?
+  foto_url    String?
+  urutan      Int      @default(0)
+  status_aktif Boolean @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Wisata {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  image_url   String?
+  category    String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Berita {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @default("")
+  thumbnail   String?
+  category    String?
+  is_featured Boolean  @default(false)
+  author      String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Galeri {
+  id          String   @id @default(cuid())
+  title       String?
+  description String?
+  image_url   String
+  category    String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Kontak {
+  id          String   @id @default(cuid())
+  alamat      String   @default("Nagari Silongo, Kecamatan Lubuk Tarok, Kabupaten Sijunjung, Sumatera Barat")
+  kode_pos    String   @default("27553")
+  phone       String?
+  whatsapp    String?
+  email       String?
+  maps_embed  String?
+  jam_layanan String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model FooterSettings {
+  id          String   @id @default(cuid())
+  description String?
+  facebook    String?
+  instagram   String?
+  youtube     String?
+  tiktok      String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model BukuTamu {
+  id          String   @id @default(cuid())
+  nama        String
+  email       String?
+  pesan       String
+  is_visible  Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Sambutan {
+  id          String   @id @default(cuid())
+  nama        String   @default("Zulfi Amri")
+  jabatan     String   @default("Wali Nagari Silongo")
+  isi_sambutan String  @default("Assalamualaikum Warahmatullahi Wabarakatuh. Selamat datang di website resmi Pemerintahan Nagari Silongo. Website ini hadir sebagai media informasi dan transparansi pelayanan publik untuk masyarakat Nagari Silongo. Kami berkomitmen untuk terus memberikan pelayanan terbaik dan membangun Nagari Silongo yang maju, mandiri, dan berbudaya.")
+  bio         String   @default("Zulfi Amri merupakan pemimpin terpilih Nagari Silongo yang berkomitmen penuh dalam memajukan pelayanan publik, melestarikan budaya Minangkabau, dan mendorong pembangunan berkelanjutan untuk kesejahteraan seluruh masyarakat Nagari Silongo.")
+  foto_url    String?
+  masa_jabatan String  @default("2024")
+  jml_jorong  String   @default("3")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Layanan {
+  id          String   @id @default(cuid())
+  nama        String
+  deskripsi   String
+  icon        String   @default("FileText")
+  tag         String?
+  urutan      Int      @default(0)
+  aktif       Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Agenda {
+  id          String   @id @default(cuid())
+  tanggal     String
+  judul       String
+  lokasi      String
+  kategori    String
+  deskripsi   String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model FAQ {
+  id          String   @id @default(cuid())
+  pertanyaan  String
+  jawaban     String
+  urutan      Int      @default(0)
+  aktif       Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Pengaduan {
+  id          String   @id @default(cuid())
+  nama        String
+  email       String?
+  telepon     String?
+  kategori    String   @default("Umum")
+  judul       String
+  pesan       String
+  status      String   @default("Diterima")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
