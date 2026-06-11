@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { db } from '@/lib/db';
 import Navbar from '@/components/layout/Navbar';
 import ScrollToTop from '@/components/layout/ScrollToTop';
